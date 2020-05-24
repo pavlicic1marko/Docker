@@ -1,0 +1,7 @@
+version: '3'
+services:
+  ubuntu1:
+    build: ./ubuntu_1
+
+  ubuntu2:
+    build: ./ubuntu_2
