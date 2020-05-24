@@ -1,16 +1,29 @@
 const express = require('express');
-const { Pool } = require('pg');
+const { Client } = require('pg');
 const HOST = '0.0.0.0';
 const PORT = 80;
 const app = express();
 
-const pool = new Pool({ user: 'postgres', host:'db' }); 
+
 
 app.get('/', (req, res) => {
-  pool.query('SELECT * FROM passwords',(error, response) => {
-    res.json(response.rows);
-  });
+ 
+    client = new Client({ host: 'db', user: 'postgres' })
+ 
+    client.connect(err => {
+        if (err) {
+            console.error('connection error', err.stack)
+        } else {
+            console.log('connected')
+        }
+    })
+ 
+    console.log("root url fetched.");
+ 
+    client.query('SELECT * FROM passwords', (error, response) => {
+        console.log("Response received");
+        res.json(response.rows);
+    });
 });
-
-app.listen(PORT, HOST);
-console.log(`Running on http://${HOST}:${PORT}`);
+ 
+app.listen(PORT, HOST)
