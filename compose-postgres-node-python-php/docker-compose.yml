@@ -1,0 +1,18 @@
+version: '3'
+
+services:
+    db:
+      environment:
+        POSTGRES_HOST_AUTH_METHOD: "trust"
+      build: ./db
+
+    node:
+      build: ./node
+      volumes: 
+        - ./node:/app
+      depends_on: 
+        - db
+      ports:
+        - 5001:80
+
+
